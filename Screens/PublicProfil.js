@@ -14,6 +14,8 @@ function PublicProfil(props) {
 
   const baseUrl = "https://swapyourskills.herokuapp.com/";
 
+  /**   Hook d'effet à l'initialisation du composant pour récupérer les skills du user dont le profil est affiché */
+
   useEffect(() => {
     let request = axios.post(`${baseUrl}skills/searchUserskills`, {
       userId: user._id,
@@ -24,6 +26,9 @@ function PublicProfil(props) {
       })
       .catch((err) => console.log("err:", err));
   }, []);
+
+
+  /**   return du composant */
 
   return (
     <View style={styles.container}>

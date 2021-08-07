@@ -13,12 +13,10 @@ import Header from "../Shared-components/Header";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation, useTheme } from "@react-navigation/native";
-import AgendaIcon from "../Shared-components/AgendaIcon";
+import { useNavigation } from "@react-navigation/native";
 import Conversations from "../Shared-components/Conversations";
-import { Input, Overlay, Badge } from "react-native-elements";
+import { Overlay } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Rating, AirbnbRating } from "react-native-ratings";
 
 import { connect } from "react-redux";
 import Starscounter from "../Shared-components/Starscounter";
@@ -31,7 +29,6 @@ function Profil(props) {
   const [unreadMessage, setUnreadMessage] = useState({ list: [] });
   const [notation, setNotation] = useState(false);
   const [rdv, setRdv] = useState([]);
-  // console.log('unreadMessage:', messageRecap)
 
   let dispatch = useDispatch();
   const navigation = useNavigation();
@@ -42,10 +39,9 @@ function Profil(props) {
   const conversationId = useSelector((state) => state.user.conversation);
   console.log("conversationId:", conversationId);
 
-  // const baseUrl = "http://172.17.1.137:3000/"; // Willem
   const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
-  // const baseUrl = "http://192.168.1.11:3000/";
 
+  /** Hook d'effet à l'initialisation du composant pour afficher les swap et les rdv */
   useEffect(() => {
     let request = axios.post(`${baseUrl}skills/myskills`, {
       token: user.token,
@@ -65,6 +61,7 @@ function Profil(props) {
       .catch((err) => console.log("Requete appointement error 53: ", err));
   }, []);
 
+  /** Hook d'effet à l'initialisation du composant et au changement de visible pour afficher les messages */
   useEffect(() => {
     let request2 = axios.post(`${baseUrl}messages/readmessage`, {
       token: user.token,
@@ -85,10 +82,15 @@ function Profil(props) {
     navigation.navigate("Main");
   };
 
-  const toggleOverlay = (skillId, receiverId, senderId, receiverName, senderName
+  const toggleOverlay = (
+    skillId,
+    receiverId,
+    senderId,
+    receiverName,
+    senderName
   ) => {
-    console.log("function toggle overlay")
-    console.log('skillId:', skillId)
+    console.log("function toggle overlay");
+    console.log("skillId:", skillId);
     setVisible(!visible); // Switch ouverture/fermeture Overlay
     if (skillId)
       dispatch({
@@ -104,6 +106,7 @@ function Profil(props) {
       });
   };
 
+  //fonction pour tronquer les textes pour faciliter l'affichage
   const slicer = (word, nbr) => {
     if (word.length > nbr) {
       return word.slice(0, nbr) + "...";
@@ -419,6 +422,8 @@ function Profil(props) {
       : (messageUserName = conversationId.senderName);
   console.log("messageUserName :", messageUserName);
 
+  // *********************************************   RETURN DU COMPOSANT    *********************************************** //
+
   return (
     <View style={styles.container}>
       <Header />
@@ -428,7 +433,7 @@ function Profil(props) {
           isVisible={visible}
           fullScreen="true"
         >
-        <View style={{ flexDirection: "row", marginTop: 40, width: "100%" }}>
+          <View style={{ flexDirection: "row", marginTop: 40, width: "100%" }}>
             <MaterialIcons
               onPress={() => toggleOverlay()}
               name="cancel"
@@ -495,11 +500,6 @@ function Profil(props) {
             >
               <Text style={styles.label}>my messages</Text>
               <View style={{ positon: "relative", top: 10, opacity: 0.7 }}>
-                {/* <Image
-                  height={50}
-                  width={50}
-                  source={require("../assets/images/messageIcon.png")}
-                /> */}
                 <Ionicons name="chatbubbles" size={70} color="#009688" />
               </View>
               <View style={styles.badge1}>
@@ -516,7 +516,6 @@ function Profil(props) {
               ]}
             >
               <Text style={styles.label}>my schedule</Text>
-              {/* <AgendaIcon /> */}
               <Ionicons name="calendar" size={70} color="#009688" />
               <View style={styles.badge2}>
                 <Text>{rdv.length}</Text>
@@ -536,21 +535,15 @@ function Profil(props) {
             { opacity: 1 },
           ]}
         >
-          <Pressable onPress={() => setMode("normal")} style={{ width: "44%" }}>
+          <Pressable onPress={() => setMode("history")} style={{ width: "44%" }}>
             <View
               style={[
                 styles.containerForm,
-                { borderWidth: mode === "normal" ? 2 : 0 },
+                { borderWidth: mode === "history" ? 2 : 0 },
               ]}
             >
               <Text style={styles.label}>my history</Text>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                {/* <Text style={styles.skillingText}>20</Text> */}
-                {/* <Image
-                  height={50}
-                  width={50}
-                  source={require("../assets/images/skilling.png")}
-                /> */}
                 <Ionicons name="repeat" size={70} color="#009688" />
               </View>
             </View>
@@ -572,7 +565,7 @@ function Profil(props) {
           </Pressable>
         </Animated.View>
 
-        {mode === "normal" ? (
+        {mode === "history" ? (
           <ScrollView style={{ marginTop: 12, width: "92%", height: 300 }}>
             {mySwap}
           </ScrollView>

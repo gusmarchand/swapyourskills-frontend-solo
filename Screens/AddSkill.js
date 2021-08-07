@@ -9,7 +9,6 @@ import {
   Image,
   KeyboardAvoidingView,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import Header from "../Shared-components/Header";
 import * as ImagePicker from "expo-image-picker";
 import axios from "axios";
@@ -118,22 +117,6 @@ export default function AddSkill(props) {
       { label: "Poterie", value: "Poterie" },
     ],
   };
-
-  // var catData = catList.map(function (category, i) {
-  //     return <Picker.Item label={category} value={category} />;
-  // });
-
-  // if (selectedCat) {
-  //     var subCatData = subCatList[
-  //         catList.findIndex((element) => element == category)
-  //     ].map(function (subcategory, i) {
-  //         return <Picker.Item label={subcategory} value={subcategory} />;
-  //     });
-  // }
-
-  // var cityData = cityList.map(function (location, i) {
-  //     return <Picker.Item label={location} value={location} />;
-  // });
 
   useEffect(() => {
     (async () => {
@@ -245,16 +228,6 @@ export default function AddSkill(props) {
                 { label: "Loisirs", value: "Loisirs" },
               ]}
             />
-            {/* <Picker
-                          style={styles.picker}
-                          selectedValue={selectedCat}
-                          onValueChange={(itemValue, itemIndex) => {
-                              setCategory(itemValue);
-                              setSelectedCat(itemValue);
-                          }}
-                      >
-                          {catData}
-                      </Picker> */}
 
             <Text style={styles.label}>Subcategory</Text>
             <RNPickerSelect
@@ -266,16 +239,6 @@ export default function AddSkill(props) {
               placeholder={{ label: "Select your subcategory", value: null }}
               items={category ? subcatList[category] : []}
             />
-
-            {/* //     category == "Bricolage" ? subcatList.bricolage : null */}
-
-            {/* <Picker
-                          style={styles.picker}
-                          selectedValue={selectedSubcat}
-                          onValueChange={(itemValue, itemIndex) => setSelectedSubcat(itemValue)}
-                      >
-                          {selectedCat && subCatData}
-                      </Picker> */}
 
             <Text style={styles.label}>Description</Text>
             <TextInput
@@ -303,16 +266,6 @@ export default function AddSkill(props) {
                 { label: "Bordeaux", value: "Bordeaux" },
               ]}
             />
-
-            {/* <Picker
-                          style={styles.picker}
-                          selectedValue={location}
-                          onValueChange={(itemValue, itemIndex) => {
-                              setLocation(itemValue);
-                          }}
-                      >
-                          {cityData}
-                      </Picker> */}
 
             <Text style={styles.label}>Image</Text>
             <View style={styles.imagePicker}>
@@ -365,7 +318,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 150, 136, 0.5)",
     marginTop: 0,
     width: "90%",
-    height:"60%",
+    height: "60%",
     borderRadius: 12,
   },
   input: {

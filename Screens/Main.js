@@ -91,7 +91,7 @@ function Main(props) {
 
 
   useEffect(() => {
-    // au changement de valeur des props. subcat ou city (suppression ou modif) relance d'une recherche avec les nouveaux paramètres
+    // au changement de valeur des props. subcat ou city (suppression ou modif) relance d'une requete avec les nouveaux paramètres
 
     //si il y a au moins la sous catégorie OU la ville sélectionnée => requet en post pour filtrer avec cette clé
     if (props.subcat || props.citySelected) {
@@ -105,7 +105,7 @@ function Main(props) {
         })
         .catch((err) => console.log("err:", err));
     }
-    //si ni sous-catégorie ni ville => requet en get pour récupérer toutes les annonces
+    //si ni sous-catégorie ni ville => requet en get pour récupérer toutes les annonces idem à celle au lancement du composant
     else {
       let request = axios.get(`${baseUrl}skills/searchskills`);
       request

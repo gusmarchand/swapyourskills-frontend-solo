@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
-import Header from "../Shared-components/Header";
 import { MaterialIcons } from "@expo/vector-icons";
 import CardsXl from "../Shared-components/CardsXl";
 import { useNavigation } from "@react-navigation/native";
@@ -8,10 +7,10 @@ import { connect } from "react-redux";
 import BtnBottomLarge from "../Shared-components/buttons/btnBottomLarge";
 import axios from "axios";
 import CardsMini from "../Shared-components/CardsMini";
-import { Ionicons } from "@expo/vector-icons";
+
 
 function Skill(props) {
-  // const baseUrl = "https://172.17.1.137:19000"
+  // const baseUrl = "https://172.17.1.35:19000"
   const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
   const navigation = useNavigation();
   let selectedSkill = props.selectedSkill;

@@ -38,7 +38,6 @@ function Signup(props) {
   let dispatch = useDispatch();
   const route = useRoute();
 
-  //console.log("route in signup", route);
   const navigation = useNavigation();
 
   const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
@@ -94,8 +93,8 @@ function Signup(props) {
             AsyncStorage.setItem("token", res.data.message.token); // Ajout du token en localStorage
             AsyncStorage.setItem("alreadySeen", "true"); // MEP clé alreadyseen dans localstorage, pour davoir Signup/Signin
             dispatch({ type: "addUser", payload: res.data.message }); // MEP info user dans le store
-            route.params.previousPage === "skills"
-              ? props.navigation.navigate("Message")
+            route.params.previous === "skills" //vérifie d'où vient si il y des infos dans les params pour redirection vers message si le user était sur un skill avant de s'incrire
+              ? props.navigation.navigate("Message") // MECANIQUE A RETESTER !!!!
               : props.navigation.navigate("Main");
           }
         })
@@ -105,8 +104,8 @@ function Signup(props) {
     }
   };
 
-  //const { previousPage } = route.params;
-  //console.log("previous params", previousPage);
+  //const { previous } = route.params;
+  //console.log("previous params", previous);
 
   return (
     <View style={styles.container}>
@@ -128,7 +127,6 @@ function Signup(props) {
                 placeholder="choose a nickname"
                 keyboardType="default"
                 placeholderTextColor="#A9A9A9"
-
               />
               {error.username ? (
                 <Text style={styles.error}>{error.username}</Text>

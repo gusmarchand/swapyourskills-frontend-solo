@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Animated,
-  Image,
-  Pressable,
-  TextInput,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import Header from "../Shared-components/Header";
 import { connect } from "react-redux";
 import axios from "axios";
 import BtnGrand from "../Shared-components/buttons/btnGrand";
+
+
+/* COMPOSANT D'ENVOI DU PREMIER MESSAGE POUR LA PRISE DE CONTACT  */
 
 function Message(props) {
   const [message, setMessage] = useState("");
@@ -20,6 +15,7 @@ function Message(props) {
   const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
 
   const sendMessage = () => {
+    //définition de l'objet à envoyer au back à l'envoi du message
     let form = {
       content: message,
       skillId: props.selectedSkill._id,
@@ -27,6 +23,7 @@ function Message(props) {
       senderId: user._id,
     };
 
+    // requete pour l'envoi du mess en BDD
     let request = axios.post(`${baseUrl}messages/createmessage`, form);
     request
       .then((res) => {
@@ -37,7 +34,7 @@ function Message(props) {
       .catch((err) => console.log("err:", err));
   };
 
-  // console.log("teacher: in message", teacher);
+  /* return du composant */
   return (
     <View style={styles.container}>
       <Header navigation={props.navigation} />
@@ -45,19 +42,14 @@ function Message(props) {
         <Text style={styles.title}>get in touch to swap</Text>
         <View style={{ width: "92%" }}>
           <View style={styles.containerForm}>
-            {/* <Text style={styles.label}>your message</Text> */}
             <TextInput
               style={styles.input}
               onChangeText={(value) => setMessage(value)}
-              multiline={true}
-
-              //numberOfLines={8}
               value={message}
               placeholder={`your first message to ${teacher.username}`}
               keyboardType="default"
               blurOnSubmit={true}
               returnKeyType="done"
-              
             />
           </View>
         </View>
@@ -70,8 +62,8 @@ function Message(props) {
             bottom: 30,
           }}
         >
-          <BtnGrand text="retour" onPress={props.navigation.goBack} />
-          <BtnGrand text="envoyer" onPress={sendMessage} />
+          <BtnGrand text="go back" onPress={props.navigation.goBack} />
+          <BtnGrand text="send" onPress={sendMessage} />
         </View>
       </View>
     </View>
@@ -111,19 +103,19 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     paddingBottom: 50,
     height: "40%",
-    marginTop:"25%"
+    marginTop: "25%",
   },
   input: {
     //borderWidth: 1,
-    height:"100%",
+    height: "100%",
     width: "90%",
     marginLeft: "5%",
     borderColor: "#FE816C",
     fontSize: 20,
-    padding:0,
+    padding: 0,
     borderRadius: 2,
     paddingHorizontal: 8,
-    textAlignVertical:'center' 
+    textAlignVertical: "center",
   },
 });
 

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
-  Image,
   Pressable,
   KeyboardAvoidingView,
 } from "react-native";
@@ -15,15 +14,15 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
-//home http://192.168.86.152:3000
 
-//caps http://172.17.1.35:3000
 
 function Signin(props) {
   const [form, setForm] = useState({ email: "", password: "" }); // Formulaire
   const [error, setError] = useState({ password: "", email: "" }); // Formulaire gestion des erreurs
 
-  // const baseUrl = "http://172.17.1.137:3000/";
+
+//const baseUrl http://172.17.1.35:3000   // gus
+
   const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
 
   let dispatch = useDispatch();
@@ -34,6 +33,7 @@ function Signin(props) {
    * @param {String} value Valeur du champs
    * @param {String} name clé sur laquelle la valeur va être ajouté
    */
+  
   const handleChange = (value, name) => {
     setForm({ ...form, [name]: value });
     setError({ password: "", email: "" });
@@ -84,7 +84,6 @@ function Signin(props) {
               keyboardType="email-address"
               autoCapitalize="none"
               placeholderTextColor="#A9A9A9"
-
             />
             {error.email ? (
               <Text style={styles.error}>{error.email}</Text>
