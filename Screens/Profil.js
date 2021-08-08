@@ -461,7 +461,7 @@ function Profil(props) {
           >
             rate this swap
           </Text>
-          <Pressable onPress={() => setNotation(!notation)}></Pressable>
+          {/* <Pressable onPress={() => setNotation(!notation)}></Pressable> */}
           <Starscounter />
           <BtnGrand text="confirm" onPress={() => setNotation(!notation)} />
         </Overlay>
