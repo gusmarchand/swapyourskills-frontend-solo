@@ -10,12 +10,13 @@ import {
   Keyboard,
 } from "react-native";
 import { ListItem, Input } from "react-native-elements";
-import { Ionicons, Entypo, MaterialIcons } from "@expo/vector-icons";
-import { connect } from "react-redux";
+import { Entypo, MaterialIcons } from "@expo/vector-icons";
 
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
+
+import envs from "../config/env";
 
 function Conversations(props) {
   /*****    hook d'état contenant la liste des messages de cette conversation    *****/
@@ -25,18 +26,15 @@ function Conversations(props) {
   /*****    hook d'état temporaire pour traiter un nouveau message    *****/
 
   const [currentMessage, setCurrentMessage] = useState("");
-  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const userId = useSelector((state) => state.user);
   const conversationId = useSelector((state) => state.user.conversation);
-  //console.log("userId:", userId);
-  //console.log("conversationId:", conversationId);
+  const { PROD_BACKEND_URL } = envs;
 
-  // const baseUrl = "http://172.17.1.137:3000/"; // Willem
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const baseUrl = PROD_BACKEND_URL;
 
   /*****    gestion du datepicker   *****/
-
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const showDatePicker = () => setDatePickerVisibility(true);
 
   const hideDatePicker = () => {
@@ -313,9 +311,7 @@ function Conversations(props) {
       >
         {messagesToChat}
       </ScrollView>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
-      >
+      <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : null}>
         <View style={{ width: "100%" }}>
           <Input
             containerStyle={{
@@ -410,17 +406,5 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
 });
-
-// function mapStateToProps(state) {
-//   return { cat: state.categoriesList };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addCategories: function (categories) {
-//       dispatch({ type: "addCategories", categories: categories });
-//     },
-//   };
-// }
 
 export default Conversations;

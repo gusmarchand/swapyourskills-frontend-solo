@@ -7,11 +7,12 @@ import { connect } from "react-redux";
 import BtnBottomLarge from "../Shared-components/buttons/btnBottomLarge";
 import axios from "axios";
 import CardsMini from "../Shared-components/CardsMini";
-
+import envs from "../config/env";
 
 function Skill(props) {
-  // const baseUrl = "https://172.17.1.35:19000"
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
   const navigation = useNavigation();
   let selectedSkill = props.selectedSkill;
   const [searchList, setSearchList] = useState([]);

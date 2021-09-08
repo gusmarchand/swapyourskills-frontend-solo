@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import Conversations from "../Shared-components/Conversations";
 import { Overlay } from "react-native-elements";
 import { MaterialIcons } from "@expo/vector-icons";
-
+import envs from "../config/env";
 import { connect } from "react-redux";
 import Starscounter from "../Shared-components/Starscounter";
 
@@ -39,7 +39,9 @@ function Profil(props) {
   const conversationId = useSelector((state) => state.user.conversation);
   console.log("conversationId:", conversationId);
 
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
 
   /** Hook d'effet à l'initialisation du composant pour afficher les swap et les rdv */
   useEffect(() => {
@@ -535,7 +537,10 @@ function Profil(props) {
             { opacity: 1 },
           ]}
         >
-          <Pressable onPress={() => setMode("history")} style={{ width: "44%" }}>
+          <Pressable
+            onPress={() => setMode("history")}
+            style={{ width: "44%" }}
+          >
             <View
               style={[
                 styles.containerForm,

@@ -13,17 +13,15 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-
-
+import envs from "../config/env";
 
 function Signin(props) {
   const [form, setForm] = useState({ email: "", password: "" }); // Formulaire
   const [error, setError] = useState({ password: "", email: "" }); // Formulaire gestion des erreurs
 
+  const { PROD_BACKEND_URL } = envs;
 
-//const baseUrl http://172.17.1.35:3000   // gus
-
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const baseUrl = PROD_BACKEND_URL;
 
   let dispatch = useDispatch();
   const navigation = useNavigation();
@@ -33,7 +31,7 @@ function Signin(props) {
    * @param {String} value Valeur du champs
    * @param {String} name clé sur laquelle la valeur va être ajouté
    */
-  
+
   const handleChange = (value, name) => {
     setForm({ ...form, [name]: value });
     setError({ password: "", email: "" });

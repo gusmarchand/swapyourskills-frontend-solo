@@ -6,13 +6,15 @@ import CardsMini from "../Shared-components/CardsMini";
 import { connect } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
+import envs from "../config/env";
 
 function PublicProfil(props) {
   const [userSkills, setuserSkills] = useState([]);
   let navigation = useNavigation();
   let user = props.selectedSkill.teacher;
+  const { PROD_BACKEND_URL } = envs;
 
-  const baseUrl = "https://swapyourskills.herokuapp.com/";
+  const baseUrl = PROD_BACKEND_URL;
 
   /**   Hook d'effet à l'initialisation du composant pour récupérer les skills du user dont le profil est affiché */
 
@@ -26,7 +28,6 @@ function PublicProfil(props) {
       })
       .catch((err) => console.log("err:", err));
   }, []);
-
 
   /**   return du composant */
 

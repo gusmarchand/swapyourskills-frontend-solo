@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
+import envs from "../config/env";
 
 function CardsMini(props) {
   let cardData = props.cardData;
@@ -10,15 +11,16 @@ function CardsMini(props) {
   let myWishlist = useSelector((state) => state.user.wishList);
   if (myWishlist === undefined) myWishlist = [];
   const myToken = useSelector((state) => state.user.token);
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
   let dispatch = useDispatch();
-  // let selectedCard = props.selectedCard
 
   const addToWishlist = (skillId, type) => {
     let url;
-    if (type === 'add') url = `${baseUrl}users/addToWishlist`;
-    if (type === 'remove') url = `${baseUrl}users/removeToWishlist`;
-    let request = axios.post( url, {
+    if (type === "add") url = `${baseUrl}users/addToWishlist`;
+    if (type === "remove") url = `${baseUrl}users/removeToWishlist`;
+    let request = axios.post(url, {
       token: myToken,
       skillId: skillId,
     });
@@ -39,8 +41,8 @@ function CardsMini(props) {
   };
 
   return (
-      <View style={styles.card}>
-        <Pressable onPress={onPress}>
+    <View style={styles.card}>
+      <Pressable onPress={onPress}>
         <Image
           style={styles.img}
           source={{
@@ -51,58 +53,56 @@ function CardsMini(props) {
         <Text style={styles.desc}>
           {cardData.description.slice(0, 50) + "..."}
         </Text>
-        </Pressable>
-        
-        <View
-          style={{
-            flexDirection: "row",
-            widht: "100%",
-            justifyContent:"space-between",
-            marginVertical:5,
-            alignItems:"center",
-            marginHorizontal:5
-          }}
-        >
-          <Text style={styles.userNames}>{cardData.teacher.username}</Text>
-          {myWishlist.some((id) => id._id === cardData._id.toString()) === false ? 
-        (
-          <Pressable onPress={() => addToWishlist(cardData._id, 'add')}>
+      </Pressable>
+
+      <View
+        style={{
+          flexDirection: "row",
+          widht: "100%",
+          justifyContent: "space-between",
+          marginVertical: 5,
+          alignItems: "center",
+          marginHorizontal: 5,
+        }}
+      >
+        <Text style={styles.userNames}>{cardData.teacher.username}</Text>
+        {myWishlist.some((id) => id._id === cardData._id.toString()) ===
+        false ? (
+          <Pressable onPress={() => addToWishlist(cardData._id, "add")}>
             <Ionicons name="heart-outline" size={22} color="#009688" />
           </Pressable>
         ) : (
-          <Pressable onPress={() => addToWishlist(cardData._id, 'remove')}>
+          <Pressable onPress={() => addToWishlist(cardData._id, "remove")}>
             <Ionicons name="heart" size={22} color="#009688" />
           </Pressable>
         )}
-        </View>
       </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
- 
     width: 170,
     height: "90%",
     borderRadius: 5,
     backgroundColor: "#fff",
     marginHorizontal: 5,
     paddingHorizontal: 5,
-    justifyContent:"space-between"
+    justifyContent: "space-between",
   },
   img: {
     width: "98%",
     height: "45%",
     borderRadius: 5,
     margin: 5,
-    alignSelf:"center"
+    alignSelf: "center",
   },
   title: {
     fontFamily: "Quicksand_700Bold",
     fontSize: 15,
     color: "#009688",
-    alignSelf:"center"
-
+    alignSelf: "center",
   },
   desc: {
     fontFamily: "Quicksand_400Regular",
@@ -110,9 +110,8 @@ const styles = StyleSheet.create({
     color: "#000000",
     marginTop: 3,
     width: "90%",
-    height:"20%",
-    alignSelf:"center"
-
+    height: "20%",
+    alignSelf: "center",
   },
   userName: {
     fontFamily: "Quicksand_700Bold",

@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { connect } from "react-redux";
+import envs from "../config/env";
 
 function Header(props) {
   let defaultAvatar =
@@ -15,11 +16,12 @@ function Header(props) {
   let dispatch = useDispatch();
   const navigation = useNavigation();
   const route = useRoute(); // Pour avoir le nom de la route
-  // console.log(route.name);
-  const user = useSelector((state) => state.user);
-  // console.log("UUUSSSSEEEEEERRRR: ", user)
 
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const user = useSelector((state) => state.user);
+
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
 
   const styles = StyleSheet.create({
     container: {
@@ -81,27 +83,25 @@ function Header(props) {
   };
 
   const logout = () => {
-    
-      AsyncStorage.getItem("token", function(error, data) {
+    AsyncStorage.getItem("token", function (error, data) {
       console.log("local storage TOKEN: ", data);
-      if (data !== null) { 
-        let request = axios.post(`${baseUrl}users/logout`, {token: data});
-    request.then(res => {
-      if (res.data.status === true) {
-        console.log(res.data.message)
-        AsyncStorage.removeItem('token')
-        dispatch({ type: "removeToken" })
-        navigation.navigate("Main")
-      };
-      if (res.data.status === false) {
-        console.log(res.data.message)
-        navigation.navigate("Main")
+      if (data !== null) {
+        let request = axios.post(`${baseUrl}users/logout`, { token: data });
+        request.then((res) => {
+          if (res.data.status === true) {
+            console.log(res.data.message);
+            AsyncStorage.removeItem("token");
+            dispatch({ type: "removeToken" });
+            navigation.navigate("Main");
+          }
+          if (res.data.status === false) {
+            console.log(res.data.message);
+            navigation.navigate("Main");
+          }
+        });
       }
-    })
-      }
-    }); 
-  
-  }
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -114,33 +114,24 @@ function Header(props) {
       >
         <Image style={styles.logo} source={logo} />
       </Pressable>
-      
-        {route.name !== 'Profil' ? 
+
+      {route.name !== "Profil" ? (
         <Pressable onPress={goTo}>
-        <Image
-          style={styles.avatar}
-          source={{ uri: user.avatar || defaultAvatar }}
-        /> 
-      </Pressable> :
-      <Pressable onPress={() => logout()}>
-      <Image
-        style={styles.logout}
-        source={require('../assets/images/logout.png')}
-      /> 
-    </Pressable>}
+          <Image
+            style={styles.avatar}
+            source={{ uri: user.avatar || defaultAvatar }}
+          />
+        </Pressable>
+      ) : (
+        <Pressable onPress={() => logout()}>
+          <Image
+            style={styles.logout}
+            source={require("../assets/images/logout.png")}
+          />
+        </Pressable>
+      )}
     </View>
   );
 }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     resetCat: function () {
-//       dispatch({ type: "resetCat" });
-//     },
-//     resetSubCat: function () {
-//       dispatch({ type: "resetSubCat" });
-//     },
-//   };
-// }
 
 export default Header;

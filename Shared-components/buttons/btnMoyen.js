@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import React from "react";
+import { Text, StyleSheet, Pressable } from "react-native";
 
 function BtnMoyen(props) {
   let text = props.text;

@@ -17,12 +17,12 @@ import formData from "form-data";
 import { useSelector } from "react-redux";
 import RNPickerSelect from "react-native-picker-select";
 import { useNavigation } from "@react-navigation/native";
+import envs from "../config/env";
 
 export default function AddSkill(props) {
-  //172.17.1.35:19000
-  // const [form, setForm] = useState(n: "", location: "{ title: "", category: selectedCat, subcategory: selectedSubcat, descriptio", imgUrl: image });
-  //   const baseUrl = "http://172.17.1.35:3000/";
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
 
   const navigation = useNavigation();
 

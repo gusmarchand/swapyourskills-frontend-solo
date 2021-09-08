@@ -14,6 +14,7 @@ import BtnDeroul from "../Shared-components/buttons/btnderoul";
 import Location from "../Shared-components/Location";
 import Categories from "../Shared-components/Categories";
 import SubCategories from "../Shared-components/SubCategories";
+import envs from "../config/env";
 
 function Main(props) {
   /**********     hook d'état pour le overlay des catégories     *********/
@@ -32,7 +33,9 @@ function Main(props) {
   const [subCatList, setSubCatList] = useState([]);
   const [searchList, setSearchList] = useState([]);
 
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
 
   /**********     reset des critères de recherche dès qu'on retourne sur le composant     *********/
   const isFocused = useIsFocused();
@@ -74,7 +77,6 @@ function Main(props) {
     );
   }
 
-
   useEffect(() => {
     props.resetCat();
     props.resetSubCat();
@@ -87,8 +89,6 @@ function Main(props) {
       })
       .catch((err) => console.log("err:", err));
   }, [isFocused]);
-
-
 
   useEffect(() => {
     // au changement de valeur des props. subcat ou city (suppression ou modif) relance d'une requete avec les nouveaux paramètres
@@ -115,7 +115,6 @@ function Main(props) {
         .catch((err) => console.log("err:", err));
     }
   }, [props.subcat, props.citySelected]);
-
 
   /**********     mécanique pour l'ouverture/switch/fermeture des overlays cat et sous-cat     *********/
   const toggleOverlay = (toggleState, index, cat) => {
@@ -150,7 +149,6 @@ function Main(props) {
     <View style={styles.container}>
       <Header navigation={props.navigation} />
       <View style={{ flex: 1, alignItems: "center" }}>
-
         {/* overlay pour la sélection d'une catégorie */}
         <Overlay isVisible={visible1} fullScreen="true">
           <MaterialIcons
@@ -254,7 +252,6 @@ const styles = StyleSheet.create({
   scroll: {
     backgroundColor: "rgba(254, 129, 108, 0.5)",
     width: "100%",
-  
   },
 
   badge: {

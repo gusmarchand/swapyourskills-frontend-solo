@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import BtnGrand from "../Shared-components/buttons/btnGrand";
 
+import envs from "../config/env";
 
 /* COMPOSANT D'ENVOI DU PREMIER MESSAGE POUR LA PRISE DE CONTACT  */
 
@@ -12,7 +13,10 @@ function Message(props) {
   const [message, setMessage] = useState("");
   let teacher = props.selectedSkill.teacher;
   let user = props.user;
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
 
   const sendMessage = () => {
     //définition de l'objet à envoyer au back à l'envoi du message

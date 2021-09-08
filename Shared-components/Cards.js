@@ -3,25 +3,26 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
+import envs from "../config/env";
 
 function Cards(props) {
   let cardData = props.cardData;
-  // console.log('cardData:', cardData)
   const myToken = useSelector((state) => state.user.token);
   let myWishlist = useSelector((state) => state.user.wishList);
-  //console.log('myWishlist:', myWishlist)
   if (myWishlist === undefined) myWishlist = [];
   let dispatch = useDispatch();
-  // console.log("myWishlist:", myWishlist);
+
   let onPress = props.onPress;
-  // const baseUrl = "http://172.17.1.137:3000/"; // Willem
-  const baseUrl = "https://swapyourskills.herokuapp.com/"; // Heroku
+
+  const { PROD_BACKEND_URL } = envs;
+
+  const baseUrl = PROD_BACKEND_URL;
 
   const addToWishlist = (skillId, type) => {
     let url;
-    if (type === 'add') url = `${baseUrl}users/addToWishlist`;
-    if (type === 'remove') url = `${baseUrl}users/removeToWishlist`;
-    let request = axios.post( url, {
+    if (type === "add") url = `${baseUrl}users/addToWishlist`;
+    if (type === "remove") url = `${baseUrl}users/removeToWishlist`;
+    let request = axios.post(url, {
       token: myToken,
       skillId: skillId,
     });
@@ -65,20 +66,20 @@ function Cards(props) {
           flexDirection: "row",
           widht: "100%",
           justifyContent: "space-between",
-          marginTop:2,
+          marginTop: 2,
           marginBottom: 5,
           alignItems: "center",
           marginHorizontal: 5,
         }}
       >
         <Text style={styles.userNames}>{cardData.teacher.username}</Text>
-        {myWishlist.some((id) => id._id === cardData._id.toString()) === false ? 
-        (
-          <Pressable onPress={() => addToWishlist(cardData._id, 'add')}>
+        {myWishlist.some((id) => id._id === cardData._id.toString()) ===
+        false ? (
+          <Pressable onPress={() => addToWishlist(cardData._id, "add")}>
             <Ionicons name="heart-outline" size={22} color="#009688" />
           </Pressable>
         ) : (
-          <Pressable onPress={() => addToWishlist(cardData._id, 'remove')}>
+          <Pressable onPress={() => addToWishlist(cardData._id, "remove")}>
             <Ionicons name="heart" size={22} color="#009688" />
           </Pressable>
         )}

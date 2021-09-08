@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
+import React from "react";
+import { Text, StyleSheet, Pressable } from "react-native";
 
 function BtnPetit(props) {
   let text = props.text;
@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 31,
-    maxHeight:31,
+    maxHeight: 31,
     backgroundColor: "#FE816C",
     borderRadius: 5,
     margin: 10,
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 0.7,
     elevation: 2,
     shadowRadius: 4,

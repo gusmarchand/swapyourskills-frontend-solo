@@ -4,10 +4,8 @@ import { Ionicons } from "@expo/vector-icons";
 import BtnMoyen from "./buttons/btnMoyen";
 
 function CardsXl(props) {
-  //console.log("props xlcard", props);
   let cardDataXl = props.cardDataXl;
   let onPress = props.onPress;
-  //console.log("cardDataXl from XL  :", cardDataXl);
 
   return (
     <View style={styles.card}>

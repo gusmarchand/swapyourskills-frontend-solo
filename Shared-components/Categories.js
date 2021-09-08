@@ -59,10 +59,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// function mapStateToProps(state) {
-//   return { cat: state.categoriesList };
-// }
-
 function mapDispatchToProps(dispatch) {
   return {
     addCategories: function (categories) {

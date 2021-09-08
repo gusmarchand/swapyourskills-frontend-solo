@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+import React from "react";
+import { View, StyleSheet, Image, ScrollView } from "react-native";
 import { ListItem } from "react-native-elements";
-import { Ionicons } from "@expo/vector-icons";
 import { connect } from "react-redux";
 
 function Location(props) {
